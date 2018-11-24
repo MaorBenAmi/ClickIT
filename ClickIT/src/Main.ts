@@ -4,13 +4,14 @@ module ClickIT {
         private mSprite1: /*Phaser.Sprite*/any;
         private mWorldGravity: number = 100;
         private mSpritesGroup: /*Phaser.Group*/ any;
-        private mCurrentNumber: number;
+        private mCurrentNumber: number = 0;
         private mNextNumber: number;
         private mCurrentVelocity: number;
         private mSprites: Array<any>;
         private mCubes: Array<Cube>;
         private mContainer: HTMLDivElement;
-        private mScore: any;
+        private mScoreText: any;
+        private mScoreTextStyle: any;
 
         constructor() {
             this.mContainer = document.getElementById('content') as HTMLDivElement;
@@ -44,10 +45,12 @@ module ClickIT {
                     let aCubeObject: Cube = new Cube(aCube, x, y, aRandom.toString());
                     this.mSprites.push(aCubeObject.cube);
                     this.mCubes.push(aCubeObject);
+           
                 }
             }
             //  Set the world (global) gravity
             Globals.game.physics.arcade.gravity.y = this.mWorldGravity;
+            this.addScore();
         }
         //____________________________
         private update() {
@@ -56,21 +59,33 @@ module ClickIT {
                 this.mCubes[i].text.x = Math.floor(aSpriteCube.x + aSpriteCube.width / 2);
                 this.mCubes[i].text.y = Math.floor(aSpriteCube.y + aSpriteCube.height / 2);
             }
+
+            this.mScoreText.text = Globals.score.toString();
         }
         //____________________________
         private render() {
  
         }
-        ////____________________________
-        //private alienOut(pCube) {
+        //______________________________
+        private addScore() {
+            let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
+            let aX: number = (aContainerBoundingRect.width - 40) / 2;
+            let aY: number = aContainerBoundingRect.height - 100; 
+            this.mScoreTextStyle = {
+                font: "70px Arial",
+                fill: "#ff0044",
+                wordWrap: true,
+                //wordWrapWidth: 100,
+                //wordWrapHeight: 100,
+                align: "center",
+                backgroundColor: "#ffff00"
+            };
 
-        //    //  Move the cube to the top of the screen again
-        //    pCube.reset(pCube.x, 0);
+            this.mScoreText = Globals.game.add.text(aX, aY, this.mCurrentNumber.toString(), this.mScoreTextStyle);
+            this.mScoreText.anchor.set(0.5);
 
-        //    //  And give it a new random velocity
-        //    pCube.body.velocity.y = 50 + Math.random() * 200;
 
-        //}
+        }
         //____________________________
     }
 }

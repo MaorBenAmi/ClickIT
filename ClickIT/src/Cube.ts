@@ -7,9 +7,11 @@
         constructor(pCube: any, pX: number, pY: number, pText: string) {
             this.mCube = pCube;
             this.mCube.name = 'cube' + pText;
+            this.mCube.inputEnabled = true;
             this.mCube.checkWorldBounds = true;
-            this.mCube.events.onOutOfBounds.add(() => this.mOnOutFromBoundries(), this);
+            this.mCube.events.onOutOfBounds.add(() => this.onOutFromBoundries(), this);
             this.mCube.body.velocity.y = 50 + Math.random() * 200;
+            this.mCube.events.onInputDown.add(() => this.onClick(), this);
             //this.mCube.width = 50;
             //this.mCube.height = 50;
             this.mTextStyle = {
@@ -28,7 +30,11 @@
 
         }
         //____________________________
-        private mOnOutFromBoundries(): void {
+        private onClick(): void {
+            Globals.score++;
+        }
+        //____________________________
+        private onOutFromBoundries(): void {
             //  Move the cube to the top of the screen again
             this.mCube.reset(this.mCube.x, 0);
 
