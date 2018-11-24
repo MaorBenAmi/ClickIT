@@ -1,0 +1,7 @@
+C:\GitProjects\ClickIT\ClickIT\obj\Debug\ClickIT.csprojResolveAssemblyReference.cache
+C:\GitProjects\ClickIT\ClickIT\bin\TypeScriptHTMLApp1.dll.config
+C:\GitProjects\ClickIT\ClickIT\bin\TypeScriptHTMLApp1.dll
+C:\GitProjects\ClickIT\ClickIT\bin\TypeScriptHTMLApp1.pdb
+C:\GitProjects\ClickIT\ClickIT\obj\Debug\ClickIT.csproj.CoreCompileInputs.cache
+C:\GitProjects\ClickIT\ClickIT\obj\Debug\TypeScriptHTMLApp1.dll
+C:\GitProjects\ClickIT\ClickIT\obj\Debug\TypeScriptHTMLApp1.pdb
