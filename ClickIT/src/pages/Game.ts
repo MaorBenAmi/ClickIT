@@ -49,7 +49,7 @@
             let aMaxX: number = aContainerBoundingRect.width - 50;
             let aRandomX: number = Math.floor(Math.random() * aMaxX);
             let aCube = this.mSpritesGroup.create(aContainerBoundingRect.left + pX + aRandomX, pY * 50, 'cube');
-            let aRandom: number = this.getRandomNumber();
+            let aRandom: number = this.getRandomNumberText();
 
             if (pY == 3) {
                 aRandom = Globals.score;
@@ -60,12 +60,12 @@
             this.mCubes.push(aCubeObject);
         }
         //____________________________
-        public getRandomNumber(): number {
+        public getRandomNumberText(): number {
             let aMin: number = Globals.score + 1;
             let aMax: number = Globals.score + 10;
 
             var num = Math.floor(Math.random() * (aMax - aMin + 1)) + aMin;
-            return (num === Globals.score) ? this.getRandomNumber() : num;
+            return (num === Globals.score) ? this.getRandomNumberText() : num;
         }
         //____________________________
         public update() {

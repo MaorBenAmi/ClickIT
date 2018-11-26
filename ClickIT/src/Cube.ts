@@ -38,6 +38,7 @@
         }
         //____________________________
         private onAfterSuccessClick(): void {
+            //fade-out animation
             this.reset();
             this.mNumber = Globals.score;
             this.mText.text = Globals.score.toString();
@@ -49,7 +50,7 @@
 
             //  And give it a new random velocity
             this.mCube.body.velocity.y = 100 + 0.5 * Globals.score;
-            this.mNumber = Globals.gameManager.game.getRandomNumber();
+            this.mNumber = Globals.gameManager.game.getRandomNumberText();
             this.mText.text = this.mNumber;
         }
         //____________________________

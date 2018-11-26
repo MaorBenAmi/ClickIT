@@ -1,13 +1,10 @@
 ﻿module ClickIT {
     export class Main {
         private mGame: Game;
-        private mWidth: number = 0;
-        private mHeight: number = 0;
         private mContainer: HTMLDivElement;
         private mGameBoard: Phaser.Game;
         constructor() {
             this.mContainer = document.getElementById('content') as HTMLDivElement;
-
             this.createGameBoard();
             this.mGame = new Game();
         }
@@ -24,9 +21,6 @@
             else {
                 gameHeight = gameWidth * ratio;
             }
-
-            this.mWidth = gameWidth;
-            this.mHeight = gameHeight;
             let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
             this.mGameBoard = new Phaser.Game(aContainerBoundingRect.width, aContainerBoundingRect.height, Phaser.AUTO, 'content', { preload: () => this.preload(), create: () => this.create() });
         }
