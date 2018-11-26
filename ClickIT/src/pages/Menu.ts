@@ -14,7 +14,7 @@
         }
         //______________________________
         public create(): void {
-            this.mText = Globals.game.add.text(100, 100, "END", this.mTextStyle);
+            this.mText = Globals.gameManager.gameBoard.add.text(100, 100, "END", this.mTextStyle);
             this.mText.anchor.set(0.5);
         }
         //______________________________

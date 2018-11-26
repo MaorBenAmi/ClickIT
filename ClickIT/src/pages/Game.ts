@@ -28,35 +28,39 @@
         }
         //____________________________
         public create() {
-            this.mSpritesGroup = Globals.game.add.group();
+            this.mSpritesGroup = Globals.gameManager.gameBoard.add.group();
             this.mSpritesGroup.enableBody = true;
             this.mSpritesGroup.physicsBodyType = Phaser.Physics.ARCADE;
             this.mSprites = new Array<any>();
-            let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
            
 
             for (let y = 0; y < 10; y++) {
                 for (let x = 0; x < 1; x++) {
-                    setTimeout(() => {
-                        let aCube = this.mSpritesGroup.create(aContainerBoundingRect.left + x * ((Math.random()*90) + 1), y * 50, 'cube');
-                        let aRandom: number = this.getRandomNumber();
-
-                        if (y == 3) {
-                            aRandom = Globals.score;
-                        }
-
-                        let aCubeObject: Cube = new Cube(aCube, x, y, aRandom);
-                        this.mSprites.push(aCubeObject.cube);
-                        this.mCubes.push(aCubeObject);
-                    }, y * 1000);
+                    setTimeout(() => this.addCubeObject(x, y), y * 1000);
                 }
             }
             //  Set the world (global) gravity
-            Globals.game.physics.arcade.gravity.y = this.mWorldGravity;
+            Globals.gameManager.gameBoard.physics.arcade.gravity.y = this.mWorldGravity;
             this.addScore();
         }
         //____________________________
-        private getRandomNumber(): number {
+        private addCubeObject(pX: number, pY: number): void {
+            let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
+            let aMaxX: number = aContainerBoundingRect.width - 50;
+            let aRandomX: number = Math.floor(Math.random() * aMaxX);
+            let aCube = this.mSpritesGroup.create(aContainerBoundingRect.left + pX + aRandomX, pY * 50, 'cube');
+            let aRandom: number = this.getRandomNumber();
+
+            if (pY == 3) {
+                aRandom = Globals.score;
+            }
+
+            let aCubeObject: Cube = new Cube(aCube, pX, pY, aRandom);
+            this.mSprites.push(aCubeObject.cube);
+            this.mCubes.push(aCubeObject);
+        }
+        //____________________________
+        public getRandomNumber(): number {
             let aMin: number = Globals.score + 1;
             let aMax: number = Globals.score + 10;
 
@@ -92,7 +96,7 @@
                 //backgroundColor: "#ffff00"
             };
 
-            this.mScoreText = Globals.game.add.text(aX, aY, Globals.score.toString(), this.mScoreTextStyle);
+            this.mScoreText = Globals.gameManager.gameBoard.add.text(aX, aY, Globals.score.toString(), this.mScoreTextStyle);
             this.mScoreText.anchor.set(0.5);
 
 

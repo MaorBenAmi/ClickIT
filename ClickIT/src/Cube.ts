@@ -21,7 +21,7 @@
                 align: "center"
             };
 
-            this.mText = Globals.game.add.text(pX, pY, pNumber.toString(), this.mTextStyle);
+            this.mText = Globals.gameManager.gameBoard.add.text(pX, pY, pNumber.toString(), this.mTextStyle);
             this.mText.anchor.set(0.5);
 
 
@@ -30,32 +30,35 @@
         private onClick(): void {
             if (this.mNumber == Globals.score) {
                 Globals.score++;
-
-                setTimeout(() => {
-                    this.mCube.reset(this.mCube.x, 0);
-
-                    //  And give it a new random velocity
-                    this.mCube.body.velocity.y = 50 + Globals.score * 200;
-                    this.mText.text = Globals.score.toString();
-                },500);
-
+                setTimeout(() => this.onAfterSuccessClick(), 100);
             } else {
-                Globals.game.state.start('EndGame');
+                Globals.gameManager.gameBoard.state.start('EndGame');
 
             }
         }
         //____________________________
+        private onAfterSuccessClick(): void {
+            this.reset();
+            this.mNumber = Globals.score;
+            this.mText.text = Globals.score.toString();
+        }
+        //____________________________
+        private reset(): void {
+            //  Move the cube to the top of the screen again
+            this.mCube.reset(this.mCube.x, 0);
+
+            //  And give it a new random velocity
+            this.mCube.body.velocity.y = 100 + 0.5 * Globals.score;
+            this.mNumber = Globals.gameManager.game.getRandomNumber();
+            this.mText.text = this.mNumber;
+        }
+        //____________________________
         private onOutFromBoundries(): void {
-
-            setTimeout(() => {
-                //  Move the cube to the top of the screen again
-                this.mCube.reset(this.mCube.x, 0);
-
-                //  And give it a new random velocity
-                this.mCube.body.velocity.y = 50 + Globals.score * 200;
-
-            }, 500);
-            
+            if (this.mNumber == Globals.score) {
+                Globals.gameManager.gameBoard.state.start('EndGame');
+                return;
+            }
+            setTimeout(() => this.reset(), 500);
         }
         //____________________________
         public get text(): any {

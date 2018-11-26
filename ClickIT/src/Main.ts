@@ -4,7 +4,7 @@
         private mWidth: number = 0;
         private mHeight: number = 0;
         private mContainer: HTMLDivElement;
-
+        private mGameBoard: Phaser.Game;
         constructor() {
             this.mContainer = document.getElementById('content') as HTMLDivElement;
 
@@ -28,18 +28,18 @@
             this.mWidth = gameWidth;
             this.mHeight = gameHeight;
             let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
-            Globals.game = new Phaser.Game(aContainerBoundingRect.width, aContainerBoundingRect.height, Phaser.AUTO, 'content', { preload: () => this.preload(), create: () => this.create() });
+            this.mGameBoard = new Phaser.Game(aContainerBoundingRect.width, aContainerBoundingRect.height, Phaser.AUTO, 'content', { preload: () => this.preload(), create: () => this.create() });
         }
         //____________________________
         private preload() {
 
             //  Add the States your game has.
-            Globals.game.state.add("Loader", new Loader());
-            Globals.game.state.add("Game", this.mGame);
-            Globals.game.state.add("EndGame", new Menu());
+            this.mGameBoard.state.add("Loader", new Loader());
+            this.mGameBoard.state.add("Game", this.mGame);
+            this.mGameBoard.state.add("EndGame", new Menu());
 
             //  Now start the Loader state.
-            Globals.game.state.start("Loader");
+            this.mGameBoard.state.start("Loader");
         }
         //____________________________
         private create() {
@@ -48,19 +48,27 @@
            //Globals.game.scale.pageAlignVertically = true;
            //Globals.game.stage.disableVisibilityChange = true;
             // Change background color of canvas
-            Globals.game.stage.backgroundColor = 'rgba(68, 136, 170, 1)';
+            this.mGameBoard.stage.backgroundColor = 'rgba(68, 136, 170, 1)';
             //Globals.game.input.mouse.capture = true;
 
 
 
             //Globals.game.stage.backgroundColor = '#2d2d2d';
-            Globals.game.physics.startSystem(Phaser.Physics.ARCADE);
-            Globals.game.physics.setBoundsToWorld();
+            this.mGameBoard.physics.startSystem(Phaser.Physics.ARCADE);
+            this.mGameBoard.physics.setBoundsToWorld();
+        }
+        //____________________________
+        public get gameBoard(): Phaser.Game {
+            return this.mGameBoard;
+        }
+        //____________________________
+        public get game(): Game {
+            return this.mGame;
         }
         //____________________________
     }
 }
 
 window.onload = () => {
-    new ClickIT.Main();
+    ClickIT.Globals.gameManager = new ClickIT.Main();
 }
