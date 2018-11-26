@@ -36,9 +36,10 @@
             //  Add the States your game has.
             Globals.game.state.add("Loader", new Loader());
             Globals.game.state.add("Game", this.mGame);
+            Globals.game.state.add("EndGame", new Menu());
 
             //  Now start the Loader state.
-            Globals.game .state.start("Loader");
+            Globals.game.state.start("Loader");
         }
         //____________________________
         private create() {
