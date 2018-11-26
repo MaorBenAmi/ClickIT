@@ -1,5 +1,5 @@
 ﻿module ClickIT {
-    export class Menu extends Phaser.State{
+    export class EndGame extends Phaser.State{
         private mText;
         private mTextStyle = {
             font: "50px Arial",

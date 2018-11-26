@@ -36,7 +36,7 @@
             //  Add the States your game has.
             this.mGameBoard.state.add("Loader", new Loader());
             this.mGameBoard.state.add("Game", this.mGame);
-            this.mGameBoard.state.add("EndGame", new Menu());
+            this.mGameBoard.state.add("EndGame", new EndGame());
 
             //  Now start the Loader state.
             this.mGameBoard.state.start("Loader");
