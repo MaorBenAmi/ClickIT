@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"module": "none",
+		"out": "www/js/game.js",
+		"sourceMap": true
+	},
+	
+	"include": [
+		"src/**/*"
+		
+	],
+	"exclude": [
+		"js/**/*"
+	]
+	
+}

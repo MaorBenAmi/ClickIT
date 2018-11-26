@@ -1,13 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var ClickIT;
 (function (ClickIT) {
     var Cube = /** @class */ (function () {
@@ -98,7 +88,7 @@ var ClickIT;
             this.mWidth = gameWidth;
             this.mHeight = gameHeight;
             var aContainerBoundingRect = this.mContainer.getBoundingClientRect();
-            ClickIT.Globals.game = new Phaser.Game(aContainerBoundingRect.width, aContainerBoundingRect.height, Phaser.AUTO, 'content', { preload: function () { return _this.preload(); }, create: function () { return _this.create(); } });
+            ClickIT.Globals.game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'content', { preload: function () { return _this.preload(); }, create: function () { return _this.create(); } });
         };
         //____________________________
         Main.prototype.preload = function () {
@@ -128,6 +118,16 @@ var ClickIT;
 window.onload = function () {
     new ClickIT.Main();
 };
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var ClickIT;
 (function (ClickIT) {
     var Game = /** @class */ (function (_super) {
@@ -165,15 +165,15 @@ var ClickIT;
         };
         //____________________________
         Game.prototype.update = function () {
+        };
+        //____________________________
+        Game.prototype.render = function () {
             for (var i = 0; i < this.mCubes.length; i++) {
                 var aSpriteCube = this.mCubes[i].cube;
                 this.mCubes[i].text.x = Math.floor(aSpriteCube.x + aSpriteCube.width / 2);
                 this.mCubes[i].text.y = Math.floor(aSpriteCube.y + aSpriteCube.height / 2);
             }
             this.mScoreText.text = ClickIT.Globals.score.toString();
-        };
-        //____________________________
-        Game.prototype.render = function () {
         };
         //______________________________
         Game.prototype.addScore = function () {
@@ -227,4 +227,4 @@ var ClickIT;
     }());
     ClickIT.Menu = Menu;
 })(ClickIT || (ClickIT = {}));
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=game.js.map

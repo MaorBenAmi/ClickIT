@@ -1,90 +1,60 @@
-﻿var Phaser = Phaser;
-module ClickIT {
+﻿module ClickIT {
     export class Main {
-        private mSprite1: /*Phaser.Sprite*/any;
-        private mWorldGravity: number = 100;
-        private mSpritesGroup: /*Phaser.Group*/ any;
-        private mCurrentNumber: number = 0;
-        private mNextNumber: number;
-        private mCurrentVelocity: number;
-        private mSprites: Array<any>;
-        private mCubes: Array<Cube>;
+        private mGame: Game;
+        private mWidth: number = 0;
+        private mHeight: number = 0;
         private mContainer: HTMLDivElement;
-        private mScoreText: any;
-        private mScoreTextStyle: any;
 
         constructor() {
             this.mContainer = document.getElementById('content') as HTMLDivElement;
-            let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
-            this.mCubes = new Array<Cube>();
-            Globals.game = new Phaser.Game(aContainerBoundingRect.width, aContainerBoundingRect.height, Phaser.AUTO, 'phaser-example', { preload: () => this.preload(), create: () => this.create(), update: () => this.update(),/*, render: () => this.render() */ });
 
+            this.createGameBoard();
+            this.mGame = new Game();
+        }
+        //_____________________________
+        private createGameBoard(): void {
+            let gameWidth = 640;
+            let gameHeight = 960;
+            let windowWidth = window.innerWidth;
+            let windowHeight = window.innerHeight;
+            let ratio = windowHeight / windowWidth;
+            if (ratio < 1.5) {
+                gameWidth = gameHeight / ratio;
+            }
+            else {
+                gameHeight = gameWidth * ratio;
+            }
+
+            this.mWidth = gameWidth;
+            this.mHeight = gameHeight;
+            let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
+            Globals.game = new Phaser.Game(aContainerBoundingRect.width, aContainerBoundingRect.height, Phaser.AUTO, 'content', { preload: () => this.preload(), create: () => this.create() });
         }
         //____________________________
         private preload() {
-            Globals.game.load.image('cube', 'www/img/cube.png');
+
+            //  Add the States your game has.
+            Globals.game.state.add("Loader", new Loader());
+            Globals.game.state.add("Game", this.mGame);
+
+            //  Now start the Loader state.
+            Globals.game .state.start("Loader");
         }
         //____________________________
         private create() {
+           //Globals.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+           //Globals.game.scale.pageAlignHorizontally = true;
+           //Globals.game.scale.pageAlignVertically = true;
+           //Globals.game.stage.disableVisibilityChange = true;
+            // Change background color of canvas
+            Globals.game.stage.backgroundColor = 'rgba(68, 136, 170, 1)';
+            //Globals.game.input.mouse.capture = true;
 
-            Globals.game.stage.backgroundColor = '#2d2d2d';
 
+
+            //Globals.game.stage.backgroundColor = '#2d2d2d';
             Globals.game.physics.startSystem(Phaser.Physics.ARCADE);
             Globals.game.physics.setBoundsToWorld();
-
-            this.mSpritesGroup = Globals.game.add.group();
-            this.mSpritesGroup.enableBody = true;
-            this.mSpritesGroup.physicsBodyType = Phaser.Physics.ARCADE;
-            this.mSprites = new Array<any>();
-            let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
-
-            for (let y = 0; y < 1; y++) {
-                for (let x = 0; x < 10; x++) {
-                    let aCube = this.mSpritesGroup.create(aContainerBoundingRect.left + x * 90, y * 50, 'cube');
-                    let aRandom: number = Math.floor(Math.random() * 100);
-                    let aCubeObject: Cube = new Cube(aCube, x, y, aRandom.toString());
-                    this.mSprites.push(aCubeObject.cube);
-                    this.mCubes.push(aCubeObject);
-           
-                }
-            }
-            //  Set the world (global) gravity
-            Globals.game.physics.arcade.gravity.y = this.mWorldGravity;
-            this.addScore();
-        }
-        //____________________________
-        private update() {
-            for (let i: number = 0; i < this.mCubes.length; i++) {
-                let aSpriteCube = this.mCubes[i].cube;
-                this.mCubes[i].text.x = Math.floor(aSpriteCube.x + aSpriteCube.width / 2);
-                this.mCubes[i].text.y = Math.floor(aSpriteCube.y + aSpriteCube.height / 2);
-            }
-
-            this.mScoreText.text = Globals.score.toString();
-        }
-        //____________________________
-        private render() {
- 
-        }
-        //______________________________
-        private addScore() {
-            let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
-            let aX: number = (aContainerBoundingRect.width - 40) / 2;
-            let aY: number = aContainerBoundingRect.height - 100; 
-            this.mScoreTextStyle = {
-                font: "70px Arial",
-                fill: "#ff0044",
-                wordWrap: true,
-                //wordWrapWidth: 100,
-                //wordWrapHeight: 100,
-                align: "center",
-                backgroundColor: "#ffff00"
-            };
-
-            this.mScoreText = Globals.game.add.text(aX, aY, this.mCurrentNumber.toString(), this.mScoreTextStyle);
-            this.mScoreText.anchor.set(0.5);
-
-
         }
         //____________________________
     }

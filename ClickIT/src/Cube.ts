@@ -12,16 +12,12 @@
             this.mCube.events.onOutOfBounds.add(() => this.onOutFromBoundries(), this);
             this.mCube.body.velocity.y = 50 + Math.random() * 200;
             this.mCube.events.onInputDown.add(() => this.onClick(), this);
-            //this.mCube.width = 50;
-            //this.mCube.height = 50;
             this.mTextStyle = {
                 font: "50px Arial",
-                //fill: "#ff0044",
                 wordWrap: true,
                 wordWrapWidth: this.mCube.width,
                 wordWrapHeight: this.mCube.height,
-                align: "center",
-                backgroundColor: "#ffff00"
+                align: "center"
             };
 
             this.mText = Globals.game.add.text(pX, pY, pText, this.mTextStyle);

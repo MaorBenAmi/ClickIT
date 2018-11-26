@@ -3102,7 +3102,7 @@ declare module Phaser {
         progress: number;
         mute: boolean;
         paused: boolean;
-        volume: number;
+        volume: boolean;
         playbackRate: boolean;
         playing: boolean;
         playWhenUnlocked: boolean;
@@ -3695,7 +3695,7 @@ declare module Phaser {
                 destroy(): void;
                 getCollisionMask(): number;
                 getVelocityAtPoint(result: number[], relativePoint: number[]): number[];
-                loadPolygon(key: string, object: string, scale ?: number): boolean;
+                loadPolygon(key: string, object: string, scale?: number): boolean;
                 moveBackward(speed: number): void;
                 moveDown(speed: number): void;
                 moveForward(speed: number): void;
@@ -4105,7 +4105,7 @@ declare module Phaser {
     }
 
     interface PluginConstructorOf<T> {
-        new (...parameters: any[]): T;
+        new(...parameters: any[]): T;
     }
 
     class PluginManager implements IStateCycle {
@@ -5936,7 +5936,7 @@ declare module Phaser {
         bulletFrame: string;
         bulletFrameCycle: boolean;
         bulletFrameRandom: boolean;
-        bulletFrames:  any[];
+        bulletFrames: any[];
         bulletGravity: Phaser.Point;
         bulletInheritSpriteSpeed: boolean;
         bulletKey: string;
