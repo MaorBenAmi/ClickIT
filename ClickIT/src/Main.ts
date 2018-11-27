@@ -31,6 +31,8 @@
             this.mGameBoard.state.add("Loader", new Loader());
             this.mGameBoard.state.add("Game", this.mGame);
             this.mGameBoard.state.add("EndGame", new EndGame());
+            this.mGameBoard.state.add("Menu", new Menu());
+            
 
             //  Now start the Loader state.
             this.mGameBoard.state.start("Loader");
