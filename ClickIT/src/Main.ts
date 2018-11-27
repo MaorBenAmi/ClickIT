@@ -37,15 +37,13 @@
         }
         //____________________________
         private create() {
-           //Globals.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-           //Globals.game.scale.pageAlignHorizontally = true;
-           //Globals.game.scale.pageAlignVertically = true;
-           //Globals.game.stage.disableVisibilityChange = true;
+           this.mGameBoard.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+           this.mGameBoard.scale.pageAlignHorizontally = true;
+           this.mGameBoard.scale.pageAlignVertically = true;
+           this.mGameBoard.stage.disableVisibilityChange = true;
             // Change background color of canvas
-            this.mGameBoard.stage.backgroundColor = 'rgba(68, 136, 170, 1)';
-            //Globals.game.input.mouse.capture = true;
-
-
+           this.mGameBoard.stage.backgroundColor = 'rgba(68, 136, 170, 1)';
+           this.mGameBoard.input.mouse.capture = true;
 
             //Globals.game.stage.backgroundColor = '#2d2d2d';
             this.mGameBoard.physics.startSystem(Phaser.Physics.ARCADE);

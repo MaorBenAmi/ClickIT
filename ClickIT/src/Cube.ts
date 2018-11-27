@@ -11,7 +11,6 @@
             this.mCube.inputEnabled = true;
             this.mCube.checkWorldBounds = true;
             this.mCube.events.onOutOfBounds.add(() => this.onOutFromBoundries(), this);
-            this.mCube.body.velocity.y = 50 + Globals.score * 300;
             this.mCube.events.onInputDown.add(() => this.onClick(), this);
             this.mTextStyle = {
                 font: "50px Arial",
@@ -47,9 +46,6 @@
         private reset(): void {
             //  Move the cube to the top of the screen again
             this.mCube.reset(this.mCube.x, 0);
-
-            //  And give it a new random velocity
-            this.mCube.body.velocity.y = 100 + 0.5 * Globals.score;
             this.mNumber = Globals.gameManager.game.getRandomNumberText();
             this.mText.text = this.mNumber;
         }

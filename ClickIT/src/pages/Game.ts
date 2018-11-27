@@ -11,7 +11,7 @@
         private mSprites: Array<any>;
         private mCubes: Array<Cube>;
         private mContainer: HTMLDivElement;
-        private mScoreText: any;
+        private mCurrentNumberText: any;
         private mScoreTextStyle: any;
 
         private mWidth: number;
@@ -28,7 +28,8 @@
         }
         //____________________________
         public create() {
-            this.mSpritesGroup = Globals.gameManager.gameBoard.add.group();
+            //this.mSpritesGroup = Globals.gameManager.gameBoard.add.group();
+            this.mSpritesGroup = Globals.gameManager.gameBoard.add.physicsGroup(Phaser.Physics.ARCADE);
             this.mSpritesGroup.enableBody = true;
             this.mSpritesGroup.physicsBodyType = Phaser.Physics.ARCADE;
             this.mSprites = new Array<any>();
@@ -39,9 +40,10 @@
                     setTimeout(() => this.addCubeObject(x, y), y * 1000);
                 }
             }
+
             //  Set the world (global) gravity
             Globals.gameManager.gameBoard.physics.arcade.gravity.y = this.mWorldGravity;
-            this.addScore();
+            this.addCurrentNumberText();
         }
         //____________________________
         private addCubeObject(pX: number, pY: number): void {
@@ -58,6 +60,12 @@
             let aCubeObject: Cube = new Cube(aCube, pX, pY, aRandom);
             this.mSprites.push(aCubeObject.cube);
             this.mCubes.push(aCubeObject);
+
+            if (pY == 9) {
+                this.mSpritesGroup.setAll('body.collideWorldBounds', true);
+                this.mSpritesGroup.setAll('body.bounce.x', 1);
+                this.mSpritesGroup.setAll('body.bounce.y', 1);
+            }
         }
         //____________________________
         public getRandomNumberText(): number {
@@ -69,7 +77,8 @@
         }
         //____________________________
         public update() {
-          
+             this.mSpritesGroup.setAll('body.velocity.y', Globals.score / 10 + + (Globals.score * 5));
+             let aIsCollide = Globals.gameManager.gameBoard.physics.arcade.collide(this.mSpritesGroup);
         }
         //____________________________
         public render() {
@@ -79,27 +88,20 @@
                 this.mCubes[i].text.y = Math.floor(aSpriteCube.y + aSpriteCube.height / 2);
             }
 
-            this.mScoreText.text = Globals.score.toString();
+            this.mCurrentNumberText.text = Globals.score.toString();
         }
         //______________________________
-        private addScore() {
+        private addCurrentNumberText() {
             let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
             let aX: number = (aContainerBoundingRect.width - 40) / 2;
             let aY: number = aContainerBoundingRect.height - 100;
             this.mScoreTextStyle = {
                 font: "70px Arial",
-                //fill: "#ff0044",
                 wordWrap: true,
-                //wordWrapWidth: 100,
-                //wordWrapHeight: 100,
-                align: "center",
-                //backgroundColor: "#ffff00"
+                align: "center"
             };
-
-            this.mScoreText = Globals.gameManager.gameBoard.add.text(aX, aY, Globals.score.toString(), this.mScoreTextStyle);
-            this.mScoreText.anchor.set(0.5);
-
-
+            this.mCurrentNumberText = Globals.gameManager.gameBoard.add.text(aX, aY, Globals.score.toString(), this.mScoreTextStyle);
+            this.mCurrentNumberText.anchor.set(0.5);
         }
         //____________________________
         //_____________________________
