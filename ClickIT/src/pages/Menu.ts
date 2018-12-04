@@ -3,8 +3,8 @@
 module ClickIT {
     export class Menu extends Phaser.State {
         private mMenu: any;
-        private mMenuStartX: number = 260;
-        private mMenuStarty: number = 30;
+        private mMenuStartX: number = 0;
+        private mMenuStarty: number = 0;
         private mMenuText: any;
         private mMenuTextStyle: any;
         private mBackGround: any;
@@ -17,10 +17,7 @@ module ClickIT {
             this.mMenuTextStyle = {
                 font: "50px Arial",
                 wordWrap: true,
-                //wordWrapWidth: this.mCube.width,
-                //wordWrapHeight: this.mCube.height,
                 align: "center"
-            
             };
            
         };
@@ -30,16 +27,21 @@ module ClickIT {
         }
         //______________________________
         public create(): void {
-
             let aContainerBoundingRect: ClientRect = this.mContainer.getBoundingClientRect();
-            this.mBackGround = Globals.gameManager.gameBoard.add.tileSprite(this.mMenuStartX, this.mMenuStarty, aContainerBoundingRect.width, aContainerBoundingRect.height, 'background')
-            this.mMenuText = Globals.gameManager.gameBoard.add.text(this.mMenuStartX, this.mMenuStarty, this.mStartText, this.mMenuTextStyle);
+
+            this.mMenuText = Globals.gameManager.gameBoard.add.text(aContainerBoundingRect.width / 2, aContainerBoundingRect.height / 2, this.mStartText, this.mMenuTextStyle);
             this.mMenuText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 5);
             this.mMenuText.anchor.set(0.5);
             this.mMenuText.inputEnabled = true;
             this.mMenuText.events.onInputDown.add(() => this.start(), this);
-           
-            //  Now start the Game state.
+
+
+            //this.mBackGround = Globals.gameManager.gameBoard.add.sprite(this.mMenuStartX, this.mMenuStarty, 'background')
+
+
+
+ 
+            ////  Now start the Game state.
             
         }
         //______________________________

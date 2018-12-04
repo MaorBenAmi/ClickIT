@@ -13,9 +13,7 @@ module ClickIT {
         }
         //______________________________
         public create(): void {
-            
-
-
+           
             //  Now start the Game state.
             this.game.state.start("Menu");
         }
